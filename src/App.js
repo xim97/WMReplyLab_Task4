@@ -1,28 +1,55 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import LeftPart from "./components/LeftPart";
 
-class App extends Component {
+import './App.css';
+import RightPart from './components/RightPart';
+
+
+export default class App extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      categories: [],
+      products: []
+    }
+
+    this.handleAddCategory = this.handleAddCategory.bind(this);
+    this.handleAddPoduct = this.handleAddPoduct.bind(this);
+  }
+
+  handleAddCategory(category) {
+    let categories = this.state.categories;
+    categories.push(category);
+    this.setState({
+      categories: categories
+    });
+  }
+
+  handleAddPoduct(product) {
+    let products = this.state.products;
+    products.push({
+      product: product,
+      id: products.length
+    });
+    this.setState({
+      products: products
+    });
+  }
+
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+        <LeftPart
+          products={this.state.products}
+          categories={this.state.categories}
+          handleAddCategory={this.handleAddCategory}
+          handleAddPoduct={this.handleAddPoduct}
+        />
+        <RightPart
+          products={this.state.products}
+        />
       </div>
     );
   }
 }
-
-export default App;
